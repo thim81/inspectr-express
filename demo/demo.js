@@ -1,6 +1,6 @@
 // demo.js
 const express = require('express');
-const inspector = require('../lib/inspector');
+const inspector = require('../lib/inspectr');
 
 const app = express();
 

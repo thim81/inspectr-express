@@ -1,8 +1,7 @@
-// bin/request-inspector.js
+// bin/inspectr.js
 const express = require('express');
 const http = require('http');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 4004;
@@ -12,7 +11,7 @@ const server = http.createServer(app);
 let clients = [];
 
 // Inspector front-end App
-const distPath = path.join(__dirname, '../node_modules/@request-inspector/app/dist');
+const distPath = path.join(__dirname, '../node_modules/@inspectr/app/dist');
 
 // --- API Endpoints
 

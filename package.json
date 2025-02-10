@@ -1,13 +1,13 @@
 {
-  "name": "@request-inspector/express",
+  "name": "@inspectr/express",
   "version": "0.1.0",
-  "description": "Express middleware to capture and inspect HTTP requests/responses with a built-in Inspector UI.",
-  "main": "lib/inspector.js",
+  "description": "Express middleware to capture and inspect HTTP requests/responses with a built-in Inspectr UI.",
+  "main": "lib/inspectr.js",
   "bin": {
-    "express-inspector": "bin/app.js"
+    "express-inspector": "bin/inspectr.js"
   },
   "scripts": {
-    "start": "node bin/request-inspector.js",
+    "start": "node bin/inspectr.js",
     "demo": "node demo/demo.js",
     "release": "npx np --branch main"
   },
@@ -25,15 +25,15 @@
   "author": "Tim Haselaars",
   "license": "MIT",
   "dependencies": {
-    "@request-inspector/app": "/Users/tim.haselaars/Sites/req-inspector/request-inspector-app",
+    "@request-inspector/app": "/Users/tim.haselaars/Sites/req-inspector/inspectr-app",
     "body": "^5.1.0",
     "express": "^4.21.2"
   },
   "files": [
     "README.md",
     "LICENSE",
-    "bin/app.js",
-    "lib/inspector.js",
+    "bin/inspectr.js",
+    "lib/inspectr.js",
     "package-lock.json"
   ]
 }
