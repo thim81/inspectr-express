@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Express Inspector API
+  version: 1.0.0
+  description: A sample API for testing purposes
+paths:
+  /api:
+    get:
+      summary: Welcome to the API
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Welcome to the API"
+  /api/services/inspector:
+    get:
+      summary: Get service info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+    post:
+      summary: Post to inspector service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceInfo'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete service
+      responses:
+        '204':
+          description: No Content
+  /api/ping:
+    get:
+      summary: Ping the API
+      responses:
+        '200':
+          description: Pong
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Pong"
+  /api/pong:
+    post:
+      summary: Pong the API
+      responses:
+        '405':
+          description: Method Not Allowed
+  /api/versions:
+    get:
+      summary: Get API versions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionInfo'
+  /changelog:
+    get:
+      summary: Redirect to API versions
+      responses:
+        '302':
+          description: Found (Redirect)
+  /docs/pricing:
+    get:
+      summary: Get pricing documentation
+      responses:
+        '404':
+          description: Not Found
+  /error:
+    get:
+      summary: Example error endpoint
+      responses:
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ServiceInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Inspector Service"
+        version:
+          type: string
+          example: "1.0.1"
+    VersionInfo:
+      type: object
+      properties:
+        version:
+          type: string
+          example: "1.0.0"
+        build:
+          type: string
+          example: "1234"
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Missing required parameters"
+    PingRequest:
+      type: object
+      properties:
+        message:
+          description: The ping message
+          type: string
+          example: "Welcome the Express Inspector"
+        user:
+          description: The user sending the ping
+          type: string
+          example: "Marco Polo"
+      required:
+        - message
+        - user

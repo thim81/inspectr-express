@@ -1,0 +1,39 @@
+{
+  "name": "@request-inspector/express",
+  "version": "0.1.0",
+  "description": "Express middleware to capture and inspect HTTP requests/responses with a built-in Inspector UI.",
+  "main": "lib/inspector.js",
+  "bin": {
+    "express-inspector": "bin/app.js"
+  },
+  "scripts": {
+    "start": "node bin/request-inspector.js",
+    "demo": "node demo/demo.js",
+    "release": "npx np --branch main"
+  },
+  "keywords": [
+    "express",
+    "middleware",
+    "inspector",
+    "viewer",
+    "logger",
+    "request",
+    "response",
+    "webhooks",
+    "SSE"
+  ],
+  "author": "Tim Haselaars",
+  "license": "MIT",
+  "dependencies": {
+    "@request-inspector/app": "/Users/tim.haselaars/Sites/req-inspector/request-inspector-app",
+    "body": "^5.1.0",
+    "express": "^4.21.2"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "bin/app.js",
+    "lib/inspector.js",
+    "package-lock.json"
+  ]
+}
