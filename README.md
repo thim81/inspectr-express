@@ -2,7 +2,7 @@
 
 **Inspectr** is an NPM package that provides middleware for Express applications to capture and inspect every incoming request and outgoing response. It also includes a built‑in Inspectr UI (accessible at [http://localhost:4004](http://localhost:4004)) where you can view request & response details in real time.
 
-<img src="https://raw.githubusercontent.com/thim81/inspectr/main/assets/express-inspector-screenshot.png" alt="Request Inspector" width="80%">
+<img src="https://raw.githubusercontent.com/thim81/inspectr/main/assets/inspectr-app.png" alt="Request Inspector" width="80%">
 
 ## Features
 
