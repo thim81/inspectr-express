@@ -4,7 +4,7 @@
   "description": "Express middleware to capture and inspect HTTP requests/responses with a built-in Inspectr UI.",
   "main": "lib/inspectr.js",
   "bin": {
-    "express-inspector": "bin/inspectr.js"
+    "inspectr": "bin/inspectr.js"
   },
   "scripts": {
     "start": "node bin/inspectr.js",
@@ -15,6 +15,7 @@
     "express",
     "middleware",
     "inspector",
+    "inspectr",
     "viewer",
     "logger",
     "request",
@@ -25,7 +26,7 @@
   "author": "Tim Haselaars",
   "license": "MIT",
   "dependencies": {
-    "@request-inspector/app": "/Users/tim.haselaars/Sites/req-inspector/inspectr-app",
+    "@inspectr/app": "/Users/tim.haselaars/Sites/req-inspector/inspectr-app",
     "body": "^5.1.0",
     "express": "^4.21.2"
   },

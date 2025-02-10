@@ -1,8 +1,8 @@
-# Request Inspector for Express
+# Inspectr for Express
 
 **Inspectr** is an NPM package that provides middleware for Express applications to capture and inspect every incoming request and outgoing response. It also includes a built‑in Inspectr UI (accessible at [http://localhost:4004](http://localhost:4004)) where you can view request & response details in real time.
 
-<img src="https://raw.githubusercontent.com/thim81/inspectr/main/assets/inspectr-app.png" alt="Request Inspector" width="80%">
+<img src="https://raw.githubusercontent.com/thim81/inspectr/main/assets/inspectr-app.png" alt="Request Inspectr" width="80%">
 
 ## Features
 
@@ -32,7 +32,7 @@ In your Express application, require the package and use the middleware. For exa
  
  const app = express();
 
-// (Optional)Set the broadcast URL for Inspector.
+// (Optional)Set the broadcast URL for Inspectr.
 // inspectr.setBroadcastUrl('http://localhost:4004/sse');
  
  // Add the inspectr middleware BEFORE your routes
@@ -43,7 +43,7 @@ In your Express application, require the package and use the middleware. For exa
              console.log('Captured data:', data);
      })
      .catch(err => {
-         console.error('Inspector error:', err);
+         console.error('Inspectr error:', err);
          next(err);
      });
  });
@@ -64,10 +64,10 @@ In your Express application, require the package and use the middleware. For exa
 
 The capture() function accepts an optional configuration object to control how request and response data is handled:
 
-| Option      | Type    | Default | Description                                                                                      |
-|:------------|:--------|:--------|:-------------------------------------------------------------------------------------------------|
-| `broadcast` | boolean | `true`  | If true, sends request/response data to the WebSocket for real-time viewing in the Inspector UI. |
-| `print`     | boolean | `true`  | If true, logs request/response details to the console in a structured format.                    |
+| Option      | Type    | Default | Description                                                                                     |
+|:------------|:--------|:--------|:------------------------------------------------------------------------------------------------|
+| `broadcast` | boolean | `true`  | If true, sends request/response data to the WebSocket for real-time viewing in the Inspectr UI. |
+| `print`     | boolean | `true`  | If true, logs request/response details to the console in a structured format.                   |
 
 
 Examples

@@ -1,19 +1,19 @@
 // demo.js
 const express = require('express');
-const inspector = require('../lib/inspectr');
+const inspectr = require('../lib/inspectr');
 
 const app = express();
 
 const PORT = process.env.PORT || 4005;
 
-// (Optional)Set the broadcast URL for Inspector.
-inspector.setBroadcastUrl(`http://localhost:4004/sse`);
+// (Optional)Set the broadcast URL for Inspectr.
+inspectr.setBroadcastUrl(`http://localhost:4004/sse`);
 
 // Use Inspector middleware for all routes.
 app.use((req, res, next) => {
-    inspector.capture(req, res, next, { broadcast: true, print: true })
+    inspectr.capture(req, res, next, { broadcast: true, print: true })
         .then(data => {
-            // Log inspector object
+            // Log inspectr object
             // console.log('Captured:', data);
         })
         .catch(err => {
@@ -32,11 +32,11 @@ app.get('/api', (req, res) => {
     res.status(200).send('Welcome to the API');
 });
 
-app.get('/api/services/inspector', (req, res) => {
-    res.status(200).json({ name:"Inspector demo", version: "1.0.1"});
+app.get('/api/services/inspectr', (req, res) => {
+    res.status(200).json({ name:"Inspectr demo", version: "1.0.1"});
 });
 
-app.post('/api/services/inspector', (req, res) => {
+app.post('/api/services/inspectr', (req, res) => {
     const {message, user} = req.body;
     if (!message || !user) {
         return res.status(400).json({error: 'Message and user are required'});
@@ -44,7 +44,7 @@ app.post('/api/services/inspector', (req, res) => {
     res.status(200).json({name: 'Service Name', version: '1.0.0'}); // Replace with real data
 });
 
-app.put('/api/services/inspector', (req, res) => {
+app.put('/api/services/inspectr', (req, res) => {
     const {name, version} = req.body;
     if (!name && !version) {
         return res.status(400).json({error: "Name or version is required"})
@@ -53,7 +53,7 @@ app.put('/api/services/inspector', (req, res) => {
     res.status(200).json({message: 'Service updated', data: data});
 });
 
-app.delete('/api/services/inspector', (req, res) => {
+app.delete('/api/services/inspectr', (req, res) => {
     res.status(204).send();
 });
 

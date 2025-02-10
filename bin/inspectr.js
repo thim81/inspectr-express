@@ -10,7 +10,7 @@ const server = http.createServer(app);
 // Array to hold connected SSE clients.
 let clients = [];
 
-// Inspector front-end App
+// Inspectr front-end App
 const distPath = path.join(__dirname, '../node_modules/@inspectr/app/dist');
 
 // --- API Endpoints
@@ -45,11 +45,11 @@ app.get('/sse', (req, res) => {
         res
     };
     clients.push(newClient);
-    console.log(`SSE Inspector client connected: ${clientId}. Total clients: ${clients.length}`);
+    console.log(`SSE Inspectr client connected: ${clientId}. Total clients: ${clients.length}`);
 
     // Remove client when connection is closed.
     req.on('close', () => {
-        console.log(`SSE Inspector client disconnected: ${clientId}`);
+        console.log(`SSE Inspectr client disconnected: ${clientId}`);
         clients = clients.filter(client => client.id !== clientId);
     });
 });
@@ -65,8 +65,8 @@ app.post('/sse', (req, res) => {
 // Serve static files (including your UI) from the 'public' folder.
 app.use(express.static(distPath));
 
-// Start the Express Inspector server.
+// Start the Express Inspectr server.
 server.listen(PORT, () => {
-    console.log(`🚀 Request Inspector available at http://localhost:${PORT}`);
+    console.log(`🚀 Request Inspectr available at http://localhost:${PORT}`);
     console.log(`🔧 Use SSE Endpoint:http://localhost:${PORT}/sse`);
 });
