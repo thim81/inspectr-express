@@ -1,21 +1,36 @@
 {
   "name": "@inspectr/express",
-  "version": "0.1.0",
   "description": "Express middleware to capture and inspect HTTP requests/responses with a built-in Inspectr UI.",
+  "version": "0.0.0",
+  "author": "Tim Haselaars",
+  "homepage": "https://github.com/thim81/inspectr#readme",
+  "bugs": "https://github.com/thim81/inspectr-express/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thim81/inspectr-express.git"
+  },
   "main": "lib/inspectr.js",
   "bin": {
     "inspectr": "bin/inspectr.js"
   },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "bin/inspectr.js",
+    "lib/inspectr.js"
+  ],
   "scripts": {
     "start": "node bin/inspectr.js",
     "demo": "node demo/demo.js",
+    "format": "npx prettier --write \"{lib,bin}/**/*.{js,jsx,ts,tsx}\" --config ./.prettierrc",
+    "test": "jest --colors --verbose --reporters=default --collectCoverage --no-cache --maxWorkers=2",
     "release": "npx np --branch main"
   },
   "keywords": [
+    "inspectr",
+    "inspector",
     "express",
     "middleware",
-    "inspector",
-    "inspectr",
     "viewer",
     "logger",
     "request",
@@ -23,18 +38,15 @@
     "webhooks",
     "SSE"
   ],
-  "author": "Tim Haselaars",
-  "license": "MIT",
   "dependencies": {
-    "@inspectr/app": "/Users/tim.haselaars/Sites/req-inspector/inspectr-app",
+    "@inspectr/app": "^0.0.1",
     "body": "^5.1.0",
     "express": "^4.21.2"
   },
-  "files": [
-    "README.md",
-    "LICENSE",
-    "bin/inspectr.js",
-    "lib/inspectr.js",
-    "package-lock.json"
-  ]
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
