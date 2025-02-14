@@ -8,6 +8,7 @@ const { describe, it, expect, beforeEach } = require('@jest/globals');
 
 // Require the inspectr module normally so that the actual body parsers are used.
 const inspectr = require('../lib/inspectr');
+const { wrapInCloudEvent, getBgColor } = require('../lib/inspectr');
 
 const {
   capture,
@@ -19,7 +20,7 @@ const {
   parseResponseBody,
   parseUrl,
   parseRequestMeta,
-  parseResponseMeta,
+  parseResponseMeta
 } = inspectr;
 
 // Helper: Create a Readable stream that contains the provided body string.
@@ -137,7 +138,7 @@ describe('inspectr module', () => {
         protocol: 'https',
         hostname: 'example.com',
         originalUrl: '/test/path?query=1',
-        get: (header) => (header === 'host' ? 'example.com' : null),
+        get: (header) => (header === 'host' ? 'example.com' : null)
       };
       const url = parseUrl(req);
       expect(url).toBe('https://example.com/test/path?query=1');
@@ -155,7 +156,7 @@ describe('inspectr module', () => {
         },
         hostname: 'localhost',
         originalUrl: '/api/test?foo=bar',
-        ip: '127.0.0.1',
+        ip: '127.0.0.1'
       };
       const meta = parseRequestMeta(req);
       expect(meta.method).toBe('POST');
@@ -172,7 +173,7 @@ describe('inspectr module', () => {
     it('should extract response meta-data using res.getHeaders()', () => {
       const res = {
         getHeaders: () => ({ 'content-type': 'application/json' }),
-        statusCode: 200,
+        statusCode: 200
       };
       const meta = parseResponseMeta(res);
       expect(meta.headers).toEqual({ 'content-type': 'application/json' });
@@ -182,7 +183,7 @@ describe('inspectr module', () => {
     it('should fallback to res._headers if res.getHeaders is not available', () => {
       const res = {
         _headers: { 'content-type': 'text/html' },
-        statusCode: 404,
+        statusCode: 404
       };
       const meta = parseResponseMeta(res);
       expect(meta.headers).toEqual({ 'content-type': 'text/html' });
@@ -220,7 +221,7 @@ describe('inspectr module', () => {
       server.close(done);
     });
 
-    it('should post data to the broadcast URL and return the same data', (done) => {
+    it('should post data to the broadcast URL and return the data', (done) => {
       const data = { test: 'broadcast' };
       // Call broadcast (which uses the real http.request)
       const returnedData = broadcast(data);
@@ -228,7 +229,8 @@ describe('inspectr module', () => {
 
       // Wait a little to allow the POST to be processed.
       setTimeout(() => {
-        expect(receivedData).toEqual(JSON.stringify(data));
+        expect(receivedData).toContain(JSON.stringify(data));
+        expect(receivedData).toContain('specversion');
         done();
       }, 100);
     });
@@ -264,24 +266,73 @@ describe('inspectr module', () => {
     });
   });
 
+  it('should wrap data as cloudEvents', (done) => {
+    const data = { test: 'broadcast' };
+    // Call broadcast (which uses the real http.request)
+    const wrappedData = wrapInCloudEvent(data);
+
+    // Wait a little to allow the POST to be processed.
+    setTimeout(() => {
+      const result = wrappedData;
+      expect(result).toHaveProperty('specversion');
+      expect(result).toHaveProperty('type', 'com.inspectr.http');
+      expect(result).toHaveProperty('source', '/inspectr');
+      expect(result).toHaveProperty('id');
+      expect(result).toHaveProperty('time');
+      expect(result).toHaveProperty('datacontenttype', 'application/json');
+      expect(result).toHaveProperty('data');
+      expect(result.data).toEqual((data));
+      done();
+    }, 100);
+  });
+
   describe('print', () => {
     it('should log the request summary to the console', () => {
       const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {
       });
       const data = {
         response: { statusCode: 200 },
-        request: {},
+        request: { timestamp: '2025-02-14T00:00:00.000Z' },
         method: 'GET',
         path: '/sample',
-        latency: 123,
-        timestamp: '2025-02-14T00:00:00.000Z',
+        latency: 123
+
       };
       const returned = print(data);
       expect(logSpy).toHaveBeenCalledWith(
-        `200 - GET /sample (123ms) - 2025-02-14T00:00:00.000Z`,
+        `\x1b[42m200\x1b[0m - GET /sample (123ms) - 2025-02-14T00:00:00.000Z`
       );
       expect(returned).toEqual(data);
       logSpy.mockRestore();
+    });
+  });
+
+  describe('getBgColor', () => {
+    it('should return green for status codes between 200 and 299', () => {
+      expect(getBgColor(200)).toBe('\x1b[42m');
+      expect(getBgColor(250)).toBe('\x1b[42m');
+      expect(getBgColor(299)).toBe('\x1b[42m');
+    });
+
+    it('should return blue for status codes between 300 and 399', () => {
+      expect(getBgColor(300)).toBe('\x1b[44m');
+      expect(getBgColor(350)).toBe('\x1b[44m');
+      expect(getBgColor(399)).toBe('\x1b[44m');
+    });
+
+    it('should return orange for status codes between 400 and 499', () => {
+      expect(getBgColor(400)).toBe('\x1b[43m');
+      expect(getBgColor(450)).toBe('\x1b[43m');
+      expect(getBgColor(499)).toBe('\x1b[43m');
+    });
+
+    it('should return red for status codes 500 and above', () => {
+      expect(getBgColor(500)).toBe('\x1b[41m');
+      expect(getBgColor(550)).toBe('\x1b[41m');
+    });
+
+    it('should return an empty string for status codes below 200', () => {
+      expect(getBgColor(100)).toBe('');
     });
   });
 

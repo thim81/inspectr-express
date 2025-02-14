@@ -2,6 +2,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const { generateUUID, wrapInCloudEvent } = require('../lib/inspectr');
 
 const app = express();
 const PORT = process.env.PORT || 4004;
@@ -13,12 +14,12 @@ let clients = [];
 // Inspectr front-end App
 const distPath = path.join(__dirname, '../node_modules/@inspectr/app/dist');
 
-// --- API Endpoints
+// --- Methods
 
 // Function to broadcast messages to all connected SSE clients.
 function broadcast(data) {
-  // Ensure data is in string format
-  const json = typeof data === 'string' ? data : JSON.stringify(data);
+  const cloudEvent = wrapInCloudEvent(data);
+  const json = typeof data === 'string' ? data : JSON.stringify(cloudEvent);
   clients.forEach((client) => {
     client.res.write(`data: ${json}\n\n`);
   });
@@ -32,24 +33,24 @@ app.get('/sse', (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
-    Connection: 'keep-alive',
+    Connection: 'keep-alive'
   });
 
   // Send a comment to keep the connection alive immediately.
   res.write(`: connected\n\n`);
 
   // Create a unique ID for this client.
-  const clientId = Date.now();
+  const clientId = generateUUID();
   const newClient = {
     id: clientId,
-    res,
+    res
   };
   clients.push(newClient);
-  console.log(`SSE Inspectr client connected: ${clientId}. Total clients: ${clients.length}`);
+  console.log(`🟢 SSE Inspectr client connected: ${clientId}. Total clients: ${clients.length}`);
 
   // Remove client when connection is closed.
   req.on('close', () => {
-    console.log(`SSE Inspectr client disconnected: ${clientId}`);
+    console.log(`🔴 SSE Inspectr client disconnected: ${clientId}`);
     clients = clients.filter((client) => client.id !== clientId);
   });
 });
