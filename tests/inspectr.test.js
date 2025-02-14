@@ -176,7 +176,7 @@ describe('inspectr module', () => {
       };
       const meta = parseResponseMeta(res);
       expect(meta.headers).toEqual({ 'content-type': 'application/json' });
-      expect(meta.status).toBe(200);
+      expect(meta.statusCode).toBe(200);
     });
 
     it('should fallback to res._headers if res.getHeaders is not available', () => {
@@ -186,7 +186,7 @@ describe('inspectr module', () => {
       };
       const meta = parseResponseMeta(res);
       expect(meta.headers).toEqual({ 'content-type': 'text/html' });
-      expect(meta.status).toBe(404);
+      expect(meta.statusCode).toBe(404);
     });
   });
 
@@ -269,9 +269,10 @@ describe('inspectr module', () => {
       const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {
       });
       const data = {
-        response: { status: 200 },
-        request: { method: 'GET' },
-        endpoint: '/sample',
+        response: { statusCode: 200 },
+        request: {},
+        method: 'GET',
+        path: '/sample',
         latency: 123,
         timestamp: '2025-02-14T00:00:00.000Z',
       };
@@ -320,13 +321,13 @@ describe('inspectr module', () => {
 
       // Verify properties in the captured data.
       expect(data).toHaveProperty('url', 'http://localhost/api/capture?x=1');
-      expect(data).toHaveProperty('endpoint', '/api/capture');
+      expect(data).toHaveProperty('path', '/api/capture');
       // The JSON parser returns an object, which is stringified in capture.
       expect(data.request.payload).toBe(JSON.stringify({ message: 'hello' }));
-      expect(data.request).toHaveProperty('method', 'POST');
+      expect(data).toHaveProperty('method', 'POST');
       // Since nothing was written to res in this test, the response payload is empty.
       expect(data.response.payload).toEqual('');
-      expect(data.response).toHaveProperty('status', 200);
+      expect(data.response).toHaveProperty('statusCode', 200);
       expect(data).toHaveProperty('latency');
       expect(data).toHaveProperty('timestamp');
     });
