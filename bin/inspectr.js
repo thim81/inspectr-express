@@ -18,8 +18,16 @@ const distPath = path.join(__dirname, '../node_modules/@inspectr/app/dist');
 
 // Function to broadcast messages to all connected SSE clients.
 function broadcast(data) {
-  const cloudEvent = wrapInCloudEvent(data);
-  const json = typeof data === 'string' ? data : JSON.stringify(cloudEvent);
+  let event;
+
+  // Check if data is a CloudEvent.
+  if (typeof data === 'object' && data !== null && data.specversion) {
+    event = data;
+  } else {
+    event = wrapInCloudEvent(data);
+  }
+
+  const json = typeof data === 'string' ? data : JSON.stringify(event);
   clients.forEach((client) => {
     client.res.write(`data: ${json}\n\n`);
   });
@@ -40,7 +48,7 @@ app.get('/sse', (req, res) => {
   res.write(`: connected\n\n`);
 
   // Create a unique ID for this client.
-  const clientId = generateUUID();
+  const clientId = `express-${generateUUID()}`;
   const newClient = {
     id: clientId,
     res

@@ -2,12 +2,13 @@ import http from 'k6/http';
 import { sleep, check } from 'k6';
 
 const BASE_URL = 'http://localhost:4005'; // Replace with your API base URL
+// const BASE_URL = 'http://localhost:8080'; // Replace with your API base URL
 // const BASE_URL = 'https://twelve-webs-send.loca.lt'; // Replace with your API base URL
 
 // export const options = {
-//     stages: [
-//         { duration: '15s', target: 30 }, // Ramp up to 30 requests per second over 15 seconds
-//     ],
+//   stages: [
+//     { duration: '15s', target: 30 } // Ramp up to 30 requests per second over 15 seconds
+//   ]
 // };
 
 export default function() {
