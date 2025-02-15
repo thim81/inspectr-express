@@ -3,7 +3,7 @@ import { sleep, check } from 'k6';
 
 const BASE_URL = 'http://localhost:4005'; // Replace with your API base URL
 // const BASE_URL = 'http://localhost:8080'; // Replace with your API base URL
-// const BASE_URL = 'https://twelve-webs-send.loca.lt'; // Replace with your API base URL
+// const BASE_URL = 'https://webhook.site/a85e4005-9c3e-4e03-ad31-599d6ec2f4bb'; // Replace with your API base URL
 
 // export const options = {
 //   stages: [
@@ -16,7 +16,7 @@ export default function() {
   let res = http.get(`${BASE_URL}/api`);
   check(res, {
     'status is 200': (r) => r.status === 200,
-    'body contains welcome message': (r) => r.body.includes('Welcome to the API')
+    'body contains welcome message': (r) => r.body.includes('Welcome to Inspectr')
   });
 
   // Test /api/services/inspectr GET
@@ -24,7 +24,7 @@ export default function() {
   check(res, {
     'status is 200': (r) => r.status === 200,
     // 'content-type is application/json': (r) => r.headers['content-type'].includes('application/json'),
-    'body contains service info': (r) => JSON.parse(r.body).name === 'Inspectr Service'
+    'body contains service info': (r) => JSON.parse(r.body).name === 'Inspectr'
   });
 
   // Test /api/services/inspectr POST

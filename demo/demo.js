@@ -29,7 +29,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/api', (req, res) => {
-  res.status(200).send('Welcome to the API');
+  res.status(200).send('Welcome to Inspectr, Simplifying API and Webhook debugging!');
 });
 
 app.get('/api/services/inspectr', (req, res) => {
@@ -41,7 +41,7 @@ app.post('/api/services/inspectr', (req, res) => {
   if (!message || !user) {
     return res.status(400).json({ error: 'Message and user are required' });
   }
-  res.status(200).json({ name: 'Service Name', version: '1.0.0' }); // Replace with real data
+  res.status(200).json({ name: 'Inspectr', version: '1.0.0' }); // Replace with real data
 });
 
 app.put('/api/services/inspectr', (req, res) => {
