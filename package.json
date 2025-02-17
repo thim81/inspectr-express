@@ -39,7 +39,7 @@
     "SSE"
   ],
   "dependencies": {
-    "@inspectr/app": "^0.0.2",
+    "@inspectr/app": "^0.0.3",
     "body": "^5.1.0",
     "express": "^4.21.2"
   },
