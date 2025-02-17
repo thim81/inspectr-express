@@ -7,7 +7,7 @@ const BASE_URL = 'http://localhost:4005'; // Replace with your API base URL
 
 // export const options = {
 //   stages: [
-//     { duration: '15s', target: 30 } // Ramp up to 30 requests per second over 15 seconds
+//     { duration: '5s', target: 30 } // Ramp up to 30 requests per second over 15 seconds
 //   ]
 // };
 
@@ -24,7 +24,7 @@ export default function() {
   check(res, {
     'status is 200': (r) => r.status === 200,
     // 'content-type is application/json': (r) => r.headers['content-type'].includes('application/json'),
-    'body contains service info': (r) => JSON.parse(r.body).name === 'Inspectr'
+    'body contains service info': (r) => JSON.parse(r.body).name === 'Inspectr demo'
   });
 
   // Test /api/services/inspectr POST
@@ -33,7 +33,7 @@ export default function() {
   check(res, {
     'status is 200': (r) => r.status === 200,
     // 'content-type is application/json': (r) => r.headers['content-type'].includes('application/json'),
-    'response body contains name': (r) => JSON.parse(r.body).name === 'Inspectr Service'
+    'response body contains name': (r) => JSON.parse(r.body).name === 'Inspectr'
   });
 
   // Test /api/services/inspectr PUT
@@ -42,7 +42,7 @@ export default function() {
   check(res, {
     'status is 200': (r) => r.status === 200,
     // 'content-type is application/json': (r) => r.headers['content-type'].includes('application/json'),
-    'response body contains updated name': (r) => JSON.parse(r.body).name === 'Updated Service'
+    'response body contains updated name': (r) => JSON.parse(r.body).data.name === 'Updated Service'
   });
 
   // Test /api/services/inspectr DELETE
@@ -74,7 +74,7 @@ export default function() {
 
 
   // Test /changelog (redirect)
-  res = http.get(`${BASE_URL}/changelog`);
+  res = http.get(`${BASE_URL}/changelog`, { redirects: 0 });
   check(res, {
     'status is 302': (r) => r.status === 302
   });

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  title: Express Inspectr API
+  title: Inspectr Express API
   version: 1.0.0
   description: A sample API for testing purposes
 paths:
@@ -14,7 +14,7 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: "Welcome to the API"
+                example: "Welcome to Inspectr, Simplifying API and Webhook debugging!"
   /api/services/inspectr:
     get:
       summary: Get service info
@@ -28,6 +28,8 @@ paths:
     post:
       summary: Post to inspectr service
       requestBody:
+        description: Ping request payload
+        required: true
         content:
           application/json:
             schema:
@@ -48,17 +50,19 @@ paths:
     put:
       summary: Update service
       requestBody:
+        description: Service update payload. Either name or version is required.
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ServiceInfo'
+              $ref: '#/components/schemas/ServiceUpdateRequest'
       responses:
         '200':
-          description: OK
+          description: Service updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceInfo'
+                $ref: '#/components/schemas/ServiceUpdateResponse'
         '400':
           description: Bad request
           content:
@@ -116,9 +120,10 @@ paths:
         '500':
           description: Internal Server Error
           content:
-            application/json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: string
+                example: "Internal Server Error"
 components:
   schemas:
     ServiceInfo:
@@ -159,3 +164,19 @@ components:
       required:
         - message
         - user
+    ServiceUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+      description: The service information to update. At least one property should be provided.
+    ServiceUpdateResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Service updated"
+        data:
+          $ref: '#/components/schemas/ServiceInfo'
