@@ -117,7 +117,7 @@ or as package.json script
 
 ```bash
 "scripts": {
- "inspectr": "inspectr"
+ "inspectr-app": "inspectr"
 }
 ```
 
