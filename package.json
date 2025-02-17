@@ -1,7 +1,7 @@
 {
   "name": "@inspectr/express",
   "description": "Inspectr Express middleware to capture and inspect HTTP requests/responses with a built-in Inspectr UI.",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Tim Haselaars",
   "homepage": "https://github.com/thim81/inspectr#readme",
   "bugs": "https://github.com/thim81/inspectr-express/issues",
