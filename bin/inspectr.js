@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // bin/inspectr.js
 const express = require('express');
 const http = require('http');
