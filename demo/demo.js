@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 4005;
 
 // (Optional)Set the broadcast URL for Inspectr.
-inspectr.setBroadcastUrl(`http://localhost:4004/sse`);
+inspectr.setBroadcastUrl(`http://localhost:4004/api/sse`);
 
 // Use Inspectr middleware for all routes.
 app.use((req, res, next) => {
