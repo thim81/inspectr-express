@@ -76,7 +76,6 @@ app.post('/api/sse', (req, res) => {
 // API health endpoint
 app.get('/api/health', (req, res) => {
   const data = {
-    uptime: process.uptime(),
     message: 'Ok',
     date: new Date()
   };
