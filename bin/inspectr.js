@@ -117,7 +117,7 @@ app.post('/api/replay', async (req, res) => {
       data: responseBody
     });
   } catch (error) {
-    console.error('Replay request failed:', error);
+    console.error('Inspectr Replay request failed:', error);
     res.status(500).json({ error: error.toString() });
   }
 });
@@ -127,6 +127,6 @@ app.use(express.static(distPath));
 
 // Start the Express Inspectr server.
 server.listen(PORT, () => {
-  console.log(`🚀 Request Inspectr available at http://localhost:${PORT}`);
-  console.log(`🔧 Use SSE Endpoint:http://localhost:${PORT}/api/sse`);
+  console.log(`🚀 Inspectr App available at http://localhost:${PORT}`);
+  console.log(`🔧 Use Inspectr SSE Endpoint http://localhost:${PORT}/api/sse`);
 });
