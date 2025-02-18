@@ -27,7 +27,7 @@
     "release": "npx np --branch main"
   },
   "dependencies": {
-    "@inspectr/app": "^0.0.3",
+    "@inspectr/app": "^0.0.4",
     "body": "^5.1.0",
     "express": "^4.21.2"
   },
