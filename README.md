@@ -100,7 +100,7 @@ app.use((req, res, next) => {
 Use default behavior (both enabled):
 
 ```js
-app.use(Inspectr.capture);
+app.use(inspectr.capture);
 ```
 
 3. Run the Inspectr App
