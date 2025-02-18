@@ -340,10 +340,10 @@ describe('inspectr module', () => {
     it('should capture request and response data and return a data object', async () => {
       // Create a fake request with JSON content.
       const jsonContent = '{"message":"hello"}';
-      const headers = { 'content-type': ContentTypes.APPLICATION_JSON, host: 'localhost' };
+      const headers = { 'content-type': ContentTypes.APPLICATION_JSON, host: 'localhost:3000' };
       const req = createRequest(jsonContent, 'POST', headers);
       req.originalUrl = '/api/capture?x=1';
-      req.hostname = 'localhost';
+      req.hostname = 'localhost:3000';
       req.ip = '127.0.0.1';
 
       // Create a fake response that captures writes.
@@ -371,7 +371,7 @@ describe('inspectr module', () => {
       const data = await capture(req, res, next, { broadcast: false, print: false });
 
       // Verify properties in the captured data.
-      expect(data).toHaveProperty('url', 'http://localhost/api/capture?x=1');
+      expect(data).toHaveProperty('url', 'http://localhost:3000/api/capture?x=1');
       expect(data).toHaveProperty('path', '/api/capture');
       // The JSON parser returns an object, which is stringified in capture.
       expect(data.request.payload).toBe(JSON.stringify({ message: 'hello' }));

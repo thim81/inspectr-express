@@ -11,7 +11,7 @@ at [http://localhost:4004](http://localhost:4004)) where you can view request & 
 ## Features
 
 - **Express Middleware**: Intercepts HTTP requests and responses and webhooks.
-- **Real-time Inspector**: Inspect Requests & Responses in the Inspectr UI.
+- **Real-time Inspector**: Inspect Requests & Responses in the Inspectr App.
 - **Log Requests**: Log request data to the console.
 - **Easy Integration**: Simply add the middleware to your Express app.
 
@@ -20,7 +20,7 @@ at [http://localhost:4004](http://localhost:4004)) where you can view request & 
 Install the package via npm:
 
 ```bash
-npm install inspectr-express
+npm install @inspectr/express
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ In your Express application, require the package and use the middleware. For exa
  ```js
  // app.js
 const express = require('express');
-const inspectr = require('inspectr').capture;
+const inspectr = require('@inspectr/express');
 
 const app = express();
 
@@ -40,17 +40,7 @@ const app = express();
 // inspectr.setBroadcastUrl('http://localhost:4004/sse');
 
 // Add the inspectr middleware BEFORE your routes
-app.use((req, res, next) => {
-  inspectr(req, res, next, { broadcast: true, print: true })
-    .then(data => {
-      // Optionally, process the captured data (e.g., log it)
-      console.log('Captured data:', data);
-    })
-    .catch(err => {
-      console.error('Inspectr error:', err);
-      next(err);
-    });
-});
+app.use(inspectr.capture);
 
 // Define your routes
 app.get('/', (req, res) => {
@@ -68,13 +58,13 @@ app.listen(PORT, () => {
 
 The capture() function accepts an optional configuration object to control how request and response data is handled:
 
-| Option      | Type    | Default | Description                                                                                     |
-|:------------|:--------|:--------|:------------------------------------------------------------------------------------------------|
-| `broadcast` | boolean | `true`  | If true, sends request/response data to the WebSocket for real-time viewing in the Inspectr UI. |
-| `print`     | boolean | `true`  | If true, logs request/response details to the console in a structured format.                   |
+| Option      | Type    | Default | Description                                                                                |
+|:------------|:--------|:--------|:-------------------------------------------------------------------------------------------|
+| `broadcast` | boolean | `true`  | If true, sends request/response data to the SSE for real-time viewing in the Inspectr App. |
+| `print`     | boolean | `true`  | If true, logs request/response details to the console in a structured format.              |
 
 Examples
-Enable only console logging (disable WebSocket broadcasting):
+Enable only console logging (disable SSE broadcasting):
 
 ```js
 app.use((req, res, next) => {
@@ -82,7 +72,7 @@ app.use((req, res, next) => {
 });
 ```
 
-Enable only WebSocket broadcasting (disable console logging):
+Enable only SSE broadcasting (disable console logging):
 
 ```js
 app.use((req, res, next) => {
@@ -90,27 +80,39 @@ app.use((req, res, next) => {
 });
 ```
 
+Or access the data directly
+
+```js
+// Add the inspectr middleware BEFORE your routes
+app.use((req, res, next) => {
+  inspectr(req, res, next, { broadcast: true, print: true })
+    .then(data => {
+      // Optionally, process the captured data (e.g., log it)
+      console.log('Captured data:', data);
+    })
+    .catch(err => {
+      console.error('Inspectr error:', err);
+      next(err);
+    });
+});
+```
+
 Use default behavior (both enabled):
 
 ```js
-app.use(Inspectr.capture);
+app.use(inspectr.capture);
 ```
 
-3. Run the Inspectr UI
+3. Run the Inspectr App
 
-The Inspectr UI is provided as a separate command-line tool that serves the UI on port 4004. Once your app is running (
-and using the middleware), you can start the Inspectr UI in another terminal:
+The Inspectr App is provided as a separate command-line tool that serves the App on port 4004. Once your app is
+running (
+and using the middleware), you can start the Inspectr App in another terminal:
 
 If you installed the package locally:
 
 ```bash
- npx inspectr
-```
-
-Or, if installed globally:
-
-```bash
- inspectr
+  @inspectr/express
 ```
 
 or as package.json script
