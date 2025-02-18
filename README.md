@@ -32,7 +32,7 @@ In your Express application, require the package and use the middleware. For exa
  ```js
  // app.js
 const express = require('express');
-const inspectr = require('inspectr').capture;
+const inspectr = require('@inspectr/express');
 
 const app = express();
 
@@ -40,17 +40,7 @@ const app = express();
 // inspectr.setBroadcastUrl('http://localhost:4004/sse');
 
 // Add the inspectr middleware BEFORE your routes
-app.use((req, res, next) => {
-  inspectr(req, res, next, { broadcast: true, print: true })
-    .then(data => {
-      // Optionally, process the captured data (e.g., log it)
-      console.log('Captured data:', data);
-    })
-    .catch(err => {
-      console.error('Inspectr error:', err);
-      next(err);
-    });
-});
+app.use(inspectr.capture);
 
 // Define your routes
 app.get('/', (req, res) => {
@@ -87,6 +77,23 @@ Enable only SSE broadcasting (disable console logging):
 ```js
 app.use((req, res, next) => {
   inspectr.capture(req, res, next, { broadcast: true, print: false });
+});
+```
+
+Or access the data directly
+
+```js
+// Add the inspectr middleware BEFORE your routes
+app.use((req, res, next) => {
+  inspectr(req, res, next, { broadcast: true, print: true })
+    .then(data => {
+      // Optionally, process the captured data (e.g., log it)
+      console.log('Captured data:', data);
+    })
+    .catch(err => {
+      console.error('Inspectr error:', err);
+      next(err);
+    });
 });
 ```
 
