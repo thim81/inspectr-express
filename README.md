@@ -11,7 +11,7 @@ at [http://localhost:4004](http://localhost:4004)) where you can view request & 
 ## Features
 
 - **Express Middleware**: Intercepts HTTP requests and responses and webhooks.
-- **Real-time Inspector**: Inspect Requests & Responses in the Inspectr UI.
+- **Real-time Inspector**: Inspect Requests & Responses in the Inspectr App.
 - **Log Requests**: Log request data to the console.
 - **Easy Integration**: Simply add the middleware to your Express app.
 
@@ -20,7 +20,7 @@ at [http://localhost:4004](http://localhost:4004)) where you can view request & 
 Install the package via npm:
 
 ```bash
-npm install inspectr-express
+npm install @inspectr/express
 ```
 
 ## Usage
@@ -68,13 +68,13 @@ app.listen(PORT, () => {
 
 The capture() function accepts an optional configuration object to control how request and response data is handled:
 
-| Option      | Type    | Default | Description                                                                                     |
-|:------------|:--------|:--------|:------------------------------------------------------------------------------------------------|
-| `broadcast` | boolean | `true`  | If true, sends request/response data to the WebSocket for real-time viewing in the Inspectr UI. |
-| `print`     | boolean | `true`  | If true, logs request/response details to the console in a structured format.                   |
+| Option      | Type    | Default | Description                                                                                |
+|:------------|:--------|:--------|:-------------------------------------------------------------------------------------------|
+| `broadcast` | boolean | `true`  | If true, sends request/response data to the SSE for real-time viewing in the Inspectr App. |
+| `print`     | boolean | `true`  | If true, logs request/response details to the console in a structured format.              |
 
 Examples
-Enable only console logging (disable WebSocket broadcasting):
+Enable only console logging (disable SSE broadcasting):
 
 ```js
 app.use((req, res, next) => {
@@ -82,7 +82,7 @@ app.use((req, res, next) => {
 });
 ```
 
-Enable only WebSocket broadcasting (disable console logging):
+Enable only SSE broadcasting (disable console logging):
 
 ```js
 app.use((req, res, next) => {
@@ -96,21 +96,16 @@ Use default behavior (both enabled):
 app.use(Inspectr.capture);
 ```
 
-3. Run the Inspectr UI
+3. Run the Inspectr App
 
-The Inspectr UI is provided as a separate command-line tool that serves the UI on port 4004. Once your app is running (
-and using the middleware), you can start the Inspectr UI in another terminal:
+The Inspectr App is provided as a separate command-line tool that serves the App on port 4004. Once your app is
+running (
+and using the middleware), you can start the Inspectr App in another terminal:
 
 If you installed the package locally:
 
 ```bash
- npx inspectr
-```
-
-Or, if installed globally:
-
-```bash
- inspectr
+  @inspectr/express
 ```
 
 or as package.json script
