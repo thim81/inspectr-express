@@ -17,6 +17,9 @@ at [http://localhost:4004](http://localhost:4004)) where you can view request & 
 
 ## Installation
 
+<a href="https://www.npmjs.com/package/@inspectr/express" alt="Latest Stable Version">![npm](https://img.shields.io/npm/v/@inspectr/express.svg)</a>
+<a href="https://www.npmjs.com/package/@inspectr/express" alt="Total Downloads">![npm](https://img.shields.io/npm/dw/@inspectr/express.svg)</a>
+
 Install the package via npm:
 
 ```bash
