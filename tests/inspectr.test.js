@@ -275,7 +275,7 @@ describe('inspectr module', () => {
     setTimeout(() => {
       const result = wrappedData;
       expect(result).toHaveProperty('specversion');
-      expect(result).toHaveProperty('type', 'com.inspectr.http');
+      expect(result).toHaveProperty('type', 'dev.inspectr.http');
       expect(result).toHaveProperty('source', '/inspectr');
       expect(result).toHaveProperty('id');
       expect(result).toHaveProperty('time');
