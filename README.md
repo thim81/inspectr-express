@@ -4,9 +4,9 @@
 request and outgoing response. It also includes a built‑in Inspectr UI (accessible
 at [http://localhost:4004](http://localhost:4004)) where you can view request & response details in real time.
 
-<img src="https://raw.githubusercontent.com/thim81/inspectr/main/assets/inspectr-app.png" alt="Request Inspectr" width="80%">
+<img src="https://raw.githubusercontent.com/inspectr-hq/inspectr/main/assets/inspectr-app.png" alt="Request Inspectr" width="80%">
 
-<img src="https://raw.githubusercontent.com/thim81/inspectr/main/assets/inspectr-console.png" alt="Console Inspectr" width="80%">
+<img src="https://raw.githubusercontent.com/inspectr-hq/inspectr/main/assets/inspectr-console.png" alt="Console Inspectr" width="80%">
 
 ## Features
 
@@ -128,4 +128,4 @@ or as package.json script
 
 Then open your browser to http://localhost:4004 to view the inspectr interface.
 
-<img src="https://raw.githubusercontent.com/thim81/inspectr/main/assets/inspectr-app.png" alt="Request Inspectr" width="80%">
+<img src="https://raw.githubusercontent.com/inspectr-hq/inspectr/main/assets/inspectr-app.png" alt="Request Inspectr" width="80%">
